@@ -1,0 +1,47 @@
+	HIA.w	R1,0		| R1 = i
+	HIA.w	R2,0		| R2 = j
+PREFOR1I:	VGL.w	R1,10
+	VSP	GRG,naFor1i
+	HIA.w	R2,0
+PREFOR1J:	VGL.w	R2,10
+	VSP	GRG,naFor1j
+	LEZ
+	HIA.a	R3,R1		| R3 used as the index
+	VER.w	R3,10		| 10 is the amount of rows
+	OPT	R3,R2
+	BIG	R0,m(R3)
+	OPT.w	R2,1
+	SPR	preFor1j
+NAFOR1J:	OPT.w	R1,1
+	SPR	preFor1i
+NAFOR1I:	HIA.w	R1,1		| This is out both for loops
+PREFOR2I:	VGL.w	R1,10
+	VSP	GR,naFor2i
+	HIA.w	R2,20
+PREFOR2J:	VGL.w	R2,10
+	VSP	KLG,naFor2j
+	HIA.w	R3,R1		| R3 is index of i left
+	AFT.w	R3,1
+	HIA.w	R4,R2		| R4 is index of j left
+	AFT.w	R4,11
+	HIA	R5,R3		| R5 is index of row-initialized list m left
+	VER.w	R5,10
+	OPT	R5,R4		| save R5 for now
+	HIA.w	R3,10		| R3 is index of i right
+	AFT	R3,R1
+	HIA.w	R4,20		| R4 is index of j right
+	AFT	R4,R2
+	HIA	R6,m(R5)		| R6 is m[1-i][j-11]
+	HIA	R7,R3		| R7 is index of row-initialized list m right
+	VER.w	R7,10
+	OPT	R7,R4		| save R5 is now index right
+	HIA	R8,m(R7)		| R8 is m[10-i][20-j]
+	OPT	R6,R8
+	BIG	R6,m(R5)
+	AFT.w	R2,1
+	SPR	preFor2j
+NAFOR2J:	OPT.w	R1,1
+	SPR	preFor2i
+NAFOR2I:	STP
+M:	RESGR	10*10
+	EINDPR
