@@ -1,0 +1,25 @@
+	HIA.w	R1,0
+PREFOR:	VGL.w	R1,20
+	VSP	GRG,naFor
+	LEZ
+	BIG	R0,a(R1)
+	OPT.w	R1,1
+	SPR	preFor
+
+NAFOR:	HIA.w	R0,7	| Change the numeric to change i
+	BIG	R0,i
+	HIA	R1,i	| R1 = i
+	HIA.w	R2,0	| R2 = ptr
+	HIA.w	R0,2
+	OPT	R0,R1
+	HIA.a	R2,a(R0)
+	HIA	R0,R1
+	VER.w	R0,3
+	AFT.w	R0,8
+	HIA.d	R3,R2
+	BIG	R3,a(R0)
+	
+	STP
+A:	RESGR	20
+I:	RESGR	1
+	EINDPR
