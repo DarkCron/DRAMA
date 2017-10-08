@@ -1,0 +1,21 @@
+	LEZ
+	HIA	R1,R0	| R1 = n
+	HIA.w	R2,1	| R2 = a
+PREWHILE1:	VGL	R2,R1
+	VSP	GR,naWhile1
+	HIA.w	R3,1	| R3 = b
+PREWHILE2:VGL	R3,R1
+	VSP	GR,naWhile2
+	HIA	R4,R2	| R4 = r
+	VER	R4,R3
+	HIA	R0,R2
+	DRU
+	HIA	R0,R3
+	DRU
+	HIA	R0,R4
+	DRU
+	OPT.w	R3,1
+	SPR	preWhile2
+NAWHILE2:	OPT.w	R2,1
+	SPR	preWhile1
+NAWHILE1:	STP

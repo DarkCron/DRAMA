@@ -1,0 +1,33 @@
+	LEZ
+	HIA	R1,R0		| R1 = n
+	HIA.w	R0,1
+	DRU
+	HIA.w	R0,-1
+	DRU
+	HIA.w	R2,2		| R2 = deler
+PREWHILE1:	HIA	R0,R1
+	DEL.w	R0,2
+	VGL	R2,R0
+	VSP	GR,naWhile1
+	HIA.w	R3,0		| R3 = mult
+	HIA	R4,R1		| R4 = getal
+PREWHILE2:	HIA	R0,R4
+	MOD	R0,R2
+	VGL.w	R0,0		| Actually not necessary but why not right? Increases my personal readability.
+	VSP	NGEL,naWhile2
+	OPT.w	R3,1
+	DEL	R4,R2
+	SPR	preWhile2
+NAWHILE2:	VGL.w	R3,0
+	VSP	GEL,naIf
+	HIA	R0,R2
+	DRU
+	HIA	R0,R3	
+	DRU
+NAIF:	OPT.w	R2,1
+	SPR	preWhile1
+NAWHILE1:	HIA	R0, R1
+	DRU
+	HIA.w	R0,1
+	DRU
+	STP	

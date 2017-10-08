@@ -1,0 +1,21 @@
+	LEZ
+	HIA	R1,R0	| R1 = n
+	HIA.w	R2,1	| R2 = laatste
+	HIA.w	R3,1	| R3 = voorlaatste
+	HIA	R0,R2
+	DRU
+	HIA	R0,R3
+	DRU
+	HIA.w	R4,2	| R4 = aantal
+PREWHILE:	VGL	R4,R1
+	VSP	GRG,naWhile
+	HIA	R5,R2	| R5 = volgend
+	OPT	R5,R3
+	HIA	R0,R5
+	DRU
+	OPT.w	R4,1
+	HIA	R3,R2
+	HIA	R2,R5
+	SPR	preWhile
+NAWHILE:	STP
+		
