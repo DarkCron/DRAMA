@@ -11,7 +11,7 @@ git push	**letterlijk 'duw' je veranderingen naar de git repository,altijd, alti
 
 (1)Een "Merge" waarschuwing is een simpele opmerking van git naar de user om te zeggen dat sommige files verandert zijn sinds je je werk begonnen bent (dus tussen jou laatste push en belangrijker pull commando)
 
-(2)Ctrl-o,Ctrl-x, Enter,Klaar!	Een handig shortcut is 'git commit -m "Jou bericht hier"'
+(2)Ctrl-o,Ctrl-x, Enter,Klaar!	Een handig shortcut is 'git commit -a -m "Jou bericht hier"'
 
 MODEL:
 Je begint je werk met:
@@ -21,7 +21,7 @@ git pull
 git pull	**Ik hoop dat je ondertussen doorhebt dat dit belangrijk is -.-
 Je doet je werk
 git add -A
-git commit -m "Blablabla"
+git commit -a -m "Blablabla"
 git push
 git push
 git push
