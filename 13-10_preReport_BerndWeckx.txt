@@ -1,0 +1,85 @@
+Convetional computers:
+millions to billions of electrical transistors
+-on	1
+-off	0	=> bits (binary digits)
+Quantum:
+Qubits, that CAN have more than one state - superposition- per observation time. Both 1 and 0 at the same time.
+Entanglement=> This is the main purpose for linking qubits together, the state of a single qubit can influence the state of the other qubits attached on the same qubits link. Entanglement enables us to determine the current state of the unobserved qubits (by observing from 1 other qubit)
+Representation of linked qubits:
+
+1 unobserved qubit: (Either 1, 0 or both) => (0,1,0-1)
+4 Linked qubits will be:
+
+(0,1,0-1)	(0,1,0-1)	(0,1,0-1)	(0,1,0-1)
+
+We "select the observation point"
+    |
+    |	All the other qubits take a 'certain state'
+   \ /
+(   0   )	(   1   )       (   0   )	(   1   )
+
+    		    |
+   		    |	All the other qubits take a 'certain state'
+ 		   \ /	(note: the qubits didn't change between observing different qubits_
+(   1   )	(   0   )       (   1   )	(   1   )
+
+    				    |
+   				    |	
+ 		  		   \ /	
+(   1   )	(   1   )       (   1   )	(   0   )
+    				 		    |
+   				 		    |	
+ 		  				   \ /	
+(   0   )	(   1   )       (   1   )	(   1   )
+
+This looks like we're just checking out different computational values, but it's important to note that all these values are accessible and observable at the same time, while a binary value like 0001 stays 0001 no matter what, until rewritten.
+
+So basically:
+Conventional computer:
+			
+		1binary line
+Input --> 1 line ---> output = 	0001
+
+Quantum computing:
+		1Qubit line
+Input --> 1 line ---> output = 	0101	|
+			  	1011	| simultaneously
+				1110	|
+				0111	|
+
+
+Conventional computer:
+			
+		1binary line
+Input --> 2 line ---> output = 	0001	
+				1001
+
+Quantum computing:
+		1Qubit line
+Input --> 2 line ---> output = 	0101	|
+			  	1011	| simultaneously
+				1110	|
+				0111	|
+
+				1101	|
+			  	0011	| simultaneously
+				1001	|
+				0001	|
+
+Conventional computer 2 results with 4 bits, Quantum computing 8 results with 4 qubits!
+Result output per qubit:
+QUBIT	|
+#	|	1	2	3	4	...	17 (intel just developed)
+results	|	1	2	3	4	...	17				n
+BIT info|	1	2	8	16	...	131072 (2^17) 			2^n
+
+So with Intel's newly developed 17-qubit quantum chip you could with a single "Qubit-link" read up to 131072 values in a single qubit line,
+while conventional computers need to look up bits 131072 - 1 times, the formula 2^n - 1, which increases dramatically when n gets bigger.
+
+https://plus.maths.org/content/what-can-quantum-computers-do
+https://plus.maths.org/content/how-does-quantum-commuting-work
+https://newsroom.intel.com/news/intel-delivers-17-qubit-superconducting-chip-advanced-packaging-qutech/
+
+	
+ 
+

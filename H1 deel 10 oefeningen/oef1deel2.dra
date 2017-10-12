@@ -1,0 +1,38 @@
+|FUNCTIE:			SOM				MAIN
+|		     (is register?)			    (is register?)	
+|PARAMETERS:	A	Y	R1		X	N	-2(R8)
+|		B	Y	R2		Y	Y	R6
+|						S	/	/
+|LOCALS:			N	/
+|
+|RESULT:			Y	R0
+|
+
+
+MAIN:	HIA.w	R0,-1
+	BST	R0
+	HIA	R8,R9
+	BST	R0	| end init
+	LEZ
+	BIG	R0,x	
+	LEZ
+	HIA	R6,R0	| R6 is Y
+	HIA.w	R5,0	| R5 is SOM
+	HIA	R5,x
+	BST	R5
+	HIA	R2,-2(R8)
+|	BST	R2	| Save the value of R2 in the stack, not necessary since MAIN can use R6-R3, managed by function
+	HIA	R1,R6	| Prepare R2 for the function parameter	
+	BST	R8
+	HIA	R9,R9
+	SBR	SOM
+	HST	R8
+	HST	R5
+	HIA	R5,R0	| R5 is RESULT
+	DRU
+	STP
+SOM:	HIA	R0,R1
+	OPT	R0,R2
+	KTG
+X:	RESGR	1
+	EINDPR

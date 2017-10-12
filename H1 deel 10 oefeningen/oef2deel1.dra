@@ -1,0 +1,55 @@
+|FUNCTIE:			GGD		|		MAIN	    
+|		     (is register?)	        |	|	    (is register?)	   / \
+|PARAMETERS:	A	N	3(R8)   |	|		/	    |
+|		B	N	2(R8)  \ /	|			    |
+|----------------------------------------------------------------------------------------------			
+|LOCALS:		R	N	-1(R8)	|	G1	N	-2(R8)
+|					|	G2	N	-3(R8)
+|					|	
+|----------------------------------------------------------------------------------------------	
+|RESULT:		[B	Y	R0]	(note: we can store the result in R0 here, but 
+|		B	N	1(R8)	I made this example not to use a register.)
+|----------------------------------------------------------------------------------------------	
+
+MAIN:	HIA.w	R0,-1
+	BST	R0
+	HIA	R8,R9
+	BST	R0	| end init
+	LEZ
+	BIG	R0,G1
+	HIA	R1,R0	| save the value temp in R1 is G1
+	LEZ
+	BIG	R0,G2
+	HIA	R2,R0	| save the value in R2 is G2 (we want to avoid using R0)
+	BST	R1
+	BST	R2
+	BST	R0	| prepare a stack value for the RESULT = 3(R8)
+	BST	R8	| func prep
+	HIA	R8,R9
+	SBR	GGD
+	HST	R8	| func end
+	HST	R2	| R2 is G2
+	HST	R1	| R1 is G1
+	HST	R0	| R0 is RESULT
+	DRU
+	STP
+GGD:	HIA	R1,3(R8)	| set parameter a = R1
+	HIA	R2,2(R8)	| set parameter b = R2
+	AFT.w	R9,1	| prepare stack value for local func value j = -1(R8)
+	HIA	R0,R1
+	MOD	R0,R2
+|	BIG	R0,-1(R8)	| Not a necessary but this is how 'save' the local value 'R' for later
+	VGL.w	R0,0
+preW1:	VSP	GEL,naW1
+	HIA	R1,R2
+	HIA	R2,R0
+	HIA	R0,R1
+	MOD	R0,R2
+	SPR	preW1
+naW1:	HIA	R0,R2
+	BIG	R0,3(R8)
+	OPT.w	R9,1
+	KTG
+G1:	RESGR	1
+G2:	RESGR	1
+	EINDPR	
