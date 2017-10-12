@@ -1,0 +1,19 @@
+	HIA.w	R1,0	| R1 is i
+preFori:	VGL.w	R1,5
+	VSP	GR,naFori
+	LEZ
+	HIA	R2,R0	| R2 is idx
+	HIA.w	R3,0	| R3 is som
+	HIA.w	R4,0	| R4 is j
+preForj:	VGL	R4,R2
+	VSP	GR,naForj
+	OPT	R3,a(R4)
+	OPT.w	R4,1
+	SPR	preForj
+	HIA	R0,R3
+	DRU
+	OPT.w	R1,1
+naForj:	SPR	preFori
+naFori:	STP
+a:	RESGR	10
+	EINDPR

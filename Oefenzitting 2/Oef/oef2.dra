@@ -1,0 +1,29 @@
+	LEZ
+	HIA	R1,R0	| R1 = n
+	HIA.w	R2,1	| R2 = temp
+	HIA.w	R0,0
+	BIG	R2,f(R0)
+	OPT.w	R0,1
+	BIG	R2,f(R0)
+	HIA.w	R2,0
+	HIA	R0,f(R2)
+	DRU
+	OPT.w	R1,1
+	HIA	R0,f(R2)
+	DRU
+	HIA.w	R2,2	| R2 = i
+preFor:	VGL	R2,R1
+	VSP	GRG,naFor
+	HIA	R3,R2	| R3 = i-1
+	AFT.w	R3,1
+	HIA	R4,R2
+	AFT.w	R4,2
+	HIA	R5,f(R3)
+	OPT	R5,f(R4)
+	BIG	R5,f(R2)
+	HIA	R0,f(R2+)
+	DRU
+	SPR	preFor
+naFor:	STP
+f:	RESGR	100
+	EINDPR

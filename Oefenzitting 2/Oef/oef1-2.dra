@@ -1,0 +1,35 @@
+	HIA.w	R0,0	
+	BIG	R0,i
+	BIG	R0,j
+	BIG	R0,som
+	BIG	R0,idx
+preFori:	HIA	R0,i
+	VGL.w	R0,5
+	VSP	GR,naFori
+	LEZ
+	BIG	R0,idx
+preForj:	HIA	R0,j
+	VGL	R0,idx
+	VSP	GR,naForj
+	HIA	R0,som
+	HIA	R1,a
+	OPT	R1,idx
+	OPT	R0,R1
+	BIG	R0,som
+	HIA	R0,j
+	OPT.w	R0,1
+	BIG	R0,j
+	SPR	preForj
+	HIA	R0,som
+	DRU
+	HIA	R0,i
+	OPT.w	R0,1
+	BIG	R0,i
+naForj:	SPR	preFori
+naFori:	STP
+a:	RESGR	10
+i:	RESGR	1
+j:	RESGR	1
+som:	RESGR	1
+idx:	RESGR	1
+	EINDPR
