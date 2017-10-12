@@ -1,0 +1,20 @@
+De korte git hulplijn (vul zelf aan indien nodig :D):
+Note: alles achter '**'zijn commentaren
+
+git fetch 	**dit is een veilig commando, zorgt ervoor dat je git de laatste nieuwe versie van ons project binnenkrijgt
+git status	**dit is een veilig commando, geeft alle nieuwe user wijzigingen door, geeft ook een kort overzicht van nieuwe versies van ons project (andere groepsleden hun commits en pushes)
+git pull	**veilig command indien na 'git fetch', die 'trekt' de laatste up-to-date versie van de KULeuven servers in dit geval. Soms zal een pull command een "Merge(1)" waarschuwing geven, geef gewoon je pull reden (persoonlijk). Verder zou dit voor geen problemen mogen zorgen.
+git add -A	**de git add is logisch, de '-A'(hoofdletter A) zorgt ervoor dat alle files, folders automatisch door git toegevoegd zullen worden in je volgende commit. Dit is over het algemeen een veilig commando, maar voegt wel -ELKE- file in folder door naar git, voor ons in het algemeen geen probleem.
+git commit -a	**dit slaat je werk op in git en bereidt het voor om door te voeren via 'git push' (kleine letter -a). Git vraagt bij elke commit om een 'reden' voor de commit, dit opent voor ubuntu de nano text editor (of andere indien zo ingesteld), schrijf hier een duidelijke maar bondige omschrijving van jou verandering.(2) Nano shortcuts zijn: ctrl-o voor het opslaan van je bericht, ctrl-x voor het sluiten.  
+git push	**letterlijk 'duw' je veranderingen naar de git repository,altijd, altijd eerst files toevoegen 'git add -A' en de veranderingen doorvoeren 'git commit -a'
+
+
+(1)Een "Merge" waarschuwing is een simpele opmerking van git naar de user om te zeggen dat sommige files verandert zijn sinds je je werk begonnen bent (dus tussen jou laatste push en belangrijker pull commando)
+
+(2)Ctrl-o,Ctrl-x, Enter,Klaar!
+
+
+GIT INSTALLEREN OP NIEUWE UBUNTU:
+simpel: sudo staat voor 'super-user do' is vergelijkbaar met administrator op Windows, sudo is nodig. sudo commands vragen om een wachtwoord (de eerste keer je je terminal opent elke keer) dit is je 'lockscreen' wachtwoord
+    sudo apt-get update		**Nodig, bereidt de paketten voor op je computer
+    sudo apt-get install git	**Installeert het git pakket voor jou.
