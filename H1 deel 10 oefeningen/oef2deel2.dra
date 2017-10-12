@@ -1,0 +1,73 @@
+|FUNCTIE:			GGD		|		MAIN
+|		     (is register?)		|	    (is register?)	
+|PARAMETERS:	A	N	2(R8)	|		/
+|		B	N	1(R8)	|	
+|----------------------------------------------------------------------------------------------			
+|LOCALS:		R	N	-1(R8)	|	G1	N	-2(R8)
+|					|	G2	N	-3(R8)
+|					|	
+|----------------------------------------------------------------------------------------------	
+|RESULT:		[B	Y	R0]	(note: we can store the result in R0 here, but 
+|		B	N	3(R8)	I made this example not to use a register.)
+|----------------------------------------------------------------------------------------------	
+
+MAIN:	HIA.w	R0,-1
+	BST	R0
+	HIA	R8,R9
+	BST	R0	| end init
+	LEZ
+	HIA	R1,R0	| R1 = X
+	BIG	R0,X	
+	LEZ
+	HIA	R2,R0	| R2 = Y
+	BIG	R0,Y
+	AFT.w	R9,1	| Reserve RESULT
+	BST	R1
+	BST	R2
+	BST	R8
+	HIA	R8,R9
+	SBR	GGD
+	HST	R8
+	HST	R2
+	HST	R1
+	HST	R0	| DON'T CLEAN RESULT STACK
+	DRU
+	STP
+GGD:	HIA	R1,2(R8)	| R1 = A
+	HIA	R2,1(R8)	| R2 = B
+	HIA	R0,3(R8)	| R0 = RESULT
+	VGL	R1,R2
+	VSP	NGEL,else1
+	HIA	R0,R1	| R0 is temp storage for RESULT	
+	SPR	naIf1
+else1:	VSP	GRG,else2
+	AFT.w	R9,1	| reserve RESULT
+	BST	R2	| STORE	PARAM-A = B = R2
+	BST	R1	| STORE 	PARAM-B = A = R1
+	BST	R8
+	HIA	R8,R9
+	SBR	GGD
+	HST	R8	
+			| LONG CLEAN STACK NOTATION (AS EXAMPLE)
+	HST	R2	| RESTORE function PARAM-B = R2
+	HST	R1	| RESTORE function PARAM-A = R1
+	HST	R0	| RESTORE RESULT = R0 !!!!! NO STACK CLEANING RESULT NEEDED
+	SPR	naIf1:
+else2:	HIA	R3,R1
+	AFT	R3,R2
+	AFT.w	R9,1	| reserve RESULT
+	BST	R3	| STORE PARAM1 = A - B = R3
+	BST	R2	| STORE PARAM2 = B
+	BST	R8
+	HIA	R8,R9
+	SBR	GGD
+	HST	R8
+	OPT.w	R9,3	| SHORTENED CLEAN STACK NOTATION (AS EXAMPLE)
+|	HST	R2	| RESTORE function PARAM-B R2 = B
+|	HST	R1	| RESTORE function PARAM-B R1 = A
+|	HST	R0	| RESTORE RESULT = R0 !!!!! NO STACK CLEANING RESULT NEEDED
+naIf1:	BIG	R0,3(R8) 	| STORE RESULT = A
+	KTG
+X:	RESGR	1
+Y:	RESGR	1
+	EINDPR
