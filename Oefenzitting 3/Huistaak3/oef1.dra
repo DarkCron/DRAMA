@@ -1,0 +1,50 @@
+|FUNCTIE:			VERSCHIL		|		MAIN
+|		     (is register?)		|	    (is register?)	
+|PARAMETERS:	A	N	2(R8)	|		/
+|		B	N	1(R8)	|	
+|----------------------------------------------------------------------------------------------			
+|LOCALS:			/		|	X	R	R1
+|					|	Y	N	-2(R8)
+|					|	S	N	-3(R8)
+|					|
+|----------------------------------------------------------------------------------------------	
+|RESULT:		[B	Y	R0]	(note: we can store the result in R0 here, but 
+|		B	N	3(R8)	I made this example not to use a register.)
+|----------------------------------------------------------------------------------------------	
+
+MAIN:	HIA.w	R0,-1
+	BST	R0
+	HIA	R8,R9
+	BST	R0	| end init
+	LEZ
+	BIG	R0,X
+	HIA	R1,R0	| R1 = X
+	LEZ
+	BIG	R0,Y
+	HIA	R2,R0	| R2 = Y
+	HIA.w	R3,0	| R3 = S
+	BIG	R3,S
+	OPT.w	R9,1	| RESERVE STACK RESULT
+	BST	R1	| X -> PARAM A
+	BST	R2	| Y -> PARAM B
+	BST	R8
+	HIA	R8,R9
+	SBR	VERSCHIL
+	HST	R8
+	HST	R2	| RESTORE R2 = Y
+	HST	R1	| RESTORE R3 = X
+	HST	R3	| RESTORE RESULT -> S
+	HIA	R0,R3
+	DRU
+	STP
+VERSCHIL:	HIA	R1,2(R8)	| R1 = A
+	HIA	R2,1(R8)	| R2 = B
+	HIA	R0,R1
+	AFT	R0,R2
+	BIG	R0,3(R8)	| STORE RESULT
+	KTG
+X:	RESGR	1
+Y:	RESGR	1
+S:	RESGR	1
+	EINDPR
+	

@@ -1,0 +1,44 @@
+|FUNCTIE:			MIN		|		MAIN
+|		     (is register?)		|	    (is register?)	
+|PARAMETERS:	N	N	2(R8)	|		/
+|		*M	N	1(R8)	|	
+|----------------------------------------------------------------------------------------------			
+|LOCALS:		I	Y	R1	|	MING	N	-2(R8)
+|		GETAL	Y	R2	|			
+|					|			
+|					|
+|----------------------------------------------------------------------------------------------	
+|RESULT:		[B	Y	R0]	(note: we can store the result in R0 here, but 
+|			/		I made this example not to use a register.)
+|----------------------------------------------------------------------------------------------	
+
+MAIN:	HIA.w	R0,-1
+	BST	R0
+	HIA	R8,R9
+	BST	R0	| end init
+	HIA.w	R0,10
+	BST	R0	| STORE PARAM N = 10
+	HIA.a	R0,MING
+	BST	R0	| STORE PARAM *M = ADDRESS MING
+	BST	R8
+	HIA	R8,R9
+	SBR	MIN
+	HST	R8
+	HIA	R0,MING
+	DRU
+	STP
+MIN:	HIA.w	R0,4999
+	BIG.i	R0,1(R8)
+	HIA.w	R1,0
+PREF1:	VGL	R1,2(R8)
+	VSP	GRG,naF1
+	LEZ
+	HIA	R2,R0
+	VGL.i	R2,1(R8)
+	VSP	GRG,naIF1
+	BIG.i	R2,1(R8)
+NAIF1:	OPT.w	R1,1
+	SPR preF1
+NAF1:	KTG
+MING:	RESGR	1
+	EINDPR	
