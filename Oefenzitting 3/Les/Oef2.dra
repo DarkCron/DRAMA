@@ -1,0 +1,95 @@
+|FUNCTION		GGD			KGV			MAIN
+|PARAMS:	A	Y	R1	A	N	1(R8)		/
+|	B	N	1(R8)	B	Y	R1
+|---------------------------------------------------------------------------------------------------------
+|LOCALS:	R	Y	R2	GV	N	-2(R8)	I	Y	R1
+|							G	N	-2(R8)
+|------------------------------------------------------------------------------------------------------
+|RESULT:		Y	R0		Y	R0		/
+|
+|
+|
+
+MAIN:	HIA.w	R0,-1
+	BST	R0
+	HIA	R8,R9
+	BST	R0	|	INIT FUNCTIONS
+	
+	AFT.w	R9,9	|	RESERVE G ON STACK
+	LEZ
+	BIG	R0,R
+	HIA.w	R1,1	|	I = R1
+For1:	VGL.w	R1,10
+	VSP	GRG,eFor1
+	LEZ
+	BIG	R0,R(R1)
+|LOCALS:
+	BST	R1
+|PARAMS:
+	HIA	R0,R(R1)	|	PARAM A
+	BST	R0
+	HIA	R1,R-1(R1)	|	PARAM B is RESGISTER R1
+|FUNC:	
+	BST	R8
+	HIA	R8,R9
+	SBR	KGV
+	HST	R8
+|CLEAR PARAMS:
+	OPT.w	R9,1
+|RESTORE LOCALS:
+	HST	R1
+|PROCESS RESULT FROM R0:
+	HIA.w	R2,R8	| 	R2 is R8
+	AFT.w	R2,2	|	R2 is -2(R8)
+	OPT	R2,R1	|	R2 is (I) -2(R8)
+	AFT.w	R2,1	|	R2 is (I-1) -2(R8)
+
+	BIG	R0,0(R2)
+	HIA	R0,R-1(R1)
+	DRU
+	HIA	R0,R(R1)
+	DRU
+	HIA	R0,0(R2)
+	DRU
+	OPT.w	R1,1
+	SPR	For1
+eFor1:	STP
+KGV:	AFT.w	R9,1	|	LOCAL GV -> STACK
+|LOCALS:
+	BST	R1	|	SAVE KGV B FROM R1
+|PARAMS:
+	BST	R1	|	PARAM B IS KGV R1 = B
+	HIA	R1,1(R8)	|	REGISTER PARAM A IS KGV A
+|FUNC:
+	BST	R8
+	HIA	R8,R9
+	SBR	GGD
+	HST	R8
+|CLEAR PARAMS:
+	OPT.w	R9,1
+|RESTORE LOCALS:
+	HST	R1
+|PROCESS RESULT FROM R0
+	BIG	R0,-2(R8)	|	GV IS NOW RESULT
+	HIA	R0,1(R8)
+	VER	R0,R1	|	R0 IS A*B
+	DEL	R0,-2(R8)	|	R0 IS A*B / GV
+|CLEAR FUNCTION LOCALS:
+	OPT.w	R9,1
+	KTG
+GGD:	HIA.w	R2,0	|	R2 IS R
+	HIA	R2,R1
+	HIA	R6,1(R8)
+	MOD	R2,1(R8)
+While1:	VGL.w	R2,0
+	VSP	GEL,eWhile1
+	HIA	R1,1(R8)
+	BIG	R2,1(R8)
+	HIA	R6,1(R8)
+	HIA	R2,R1
+	MOD	R2,1(R8)
+	SPR	While1
+eWhile1:	HIA	R0,1(R8)	|	!Don't forget this, wasted me 30 minutes of my life figuring out what I forgot, oops
+	KTG
+R:	RESGR	10
+	EINDPR
