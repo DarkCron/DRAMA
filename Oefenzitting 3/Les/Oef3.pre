@@ -1,0 +1,57 @@
+|FUNCTION			KWADRT			MAIN
+|PARAMS:		A	Y	R1		/
+|		B	N	2(R8)
+|		*SKW	Y	R2
+|		*VKW	N	1(R8)
+|-----------------------------------------------------------------------------------
+|LOCALS:		AA	N	-2(R8)	X	N	-2(R8)
+|		BB	N	-3(R8)	Y	Y	R6
+|					SOM	N	-3(R8)
+|					VERSCHIL	N	-4(R8)
+MAIN:	HIA.w	R0,-1
+	BST	R0
+	HIA	R8,R9
+	BST	R0	| INIT
+	AFT.w	R9,3
+	HIA.w	R0,5
+	BIG	R0,-2(R8)
+	HIA.w	R6,3
+|PARAMS DECLARATION:
+	HIA	R0,R6
+	OPT.w	R0,4
+	BST	R0	|	STORING PARAM B
+	HIA.a	R0,-4(R8)
+	BST	R0	|	STORING PARAM *VKW
+	HIA	R1,-2(R8)	|	STORING PARAM A
+	HIA.a	R2,-3(R8)	|	STORING PARAM *SKW
+|FUNC:
+	BST	R8
+	HIA	R8,R9
+	SBR	KWADRT
+	HST	R8
+|CLEAR PARAMS:
+	OPT.w	R9,2	| 	2 BST'S TO CLEAR
+	HIA	R0,-3(R8)
+	DRU
+	HIA	R0,-4(R8)
+	DRU
+	STP
+KWADRT:	AFT.w	R9,2	| 	STORE LOCALS IN STACK
+	BST	R6	|	R6 IS AA
+	BST	R5	|	R5 IS BB
+	HIA	R6,R1
+	VER	R6,R1
+	HIA	R5,2(R8)
+	VER	R5,2(R8)
+	HIA	R0,R6
+	OPT	R0,R5
+	BIG	R0,0(R2)
+	HIA	R0,R6
+	AFT	R0,R5
+	BIG.i	R0,1(R8)
+	HST	R5
+	HST	R6
+	OPT.w	R9,2
+	KTG
+	EINDPR
+	
