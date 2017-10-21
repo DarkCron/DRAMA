@@ -1,0 +1,48 @@
+|FUNCTIONS:		MAIN			GSOM
+|PARAMS:			/		A	N	1(R8)	
+|					N	Y	R1
+|--------------------------------------------------------------------------------------
+|LOCALS:			/		SOM	N	-2(R8)
+|					I	Y	R6
+|--------------------------------------------------------------------------------------
+|RESULT:			/			Y	R0
+|
+MAIN:	HIA.w	R0,-1
+	BST	R0
+	HIA	R8,R9
+	BST	R0
+
+|PARAMS:	
+	HIA.a	R0,RIJ
+	BST	R0	|	STORE RIJ ADDRESS (CAN NOT DIRECTLY STORE ARRAYS) IS A
+	HIA.w	R1,10	|	N = R1	
+|LOCALS: NONE, YAY
+|FUNCTION:
+	BST	R8
+	HIA	R8,R9
+	SBR	GSOM
+	HST	R8
+|CLEAR PARAMS:
+	OPT.w	R9,1	|	CLEAR RIJ
+|PROCESS RESULT:
+	DRU
+	STP
+GSOM:	AFT.w	R9,1	|	NON REGISTER LOCALS ON STACK
+	HIA.w	R0,0
+	BIG	R0,-2(R8)
+	HIA.w	R6,0	
+FOR1:	VGL	R6,R1
+	VSP	GRG,NAFOR1
+	HIA	R0,1(R8)	|	R0 NOW HAS THE ADDRESS OF RIJ[0]
+	OPT	R0,R6	|	R0 NOW HAS ADDRESS OF RIJ[I]
+	HIA	R0,0(R0)
+	VER	R0,R6	|	R0 NOW HAS VALUE: RIJ[I] * I
+	OPT	R0,-2(R8)	|	R0 NOW HAS VALUE: (RIJ[I] * I) + SOM	
+	BIG	R0,-2(R8)	|	SOM NOW HAS (RIJ[I] * I) + SOM
+	OPT.w	R6,1
+	SPR	FOR1
+NAFOR1:	HIA	R0,-2(R8)
+	OPT.w	R9,1	|	NON REGISTER LOCALS FROM STACK
+	KTG
+RIJ:	RESGR	20	
+	EINDPR

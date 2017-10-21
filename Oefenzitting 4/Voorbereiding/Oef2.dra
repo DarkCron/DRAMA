@@ -1,0 +1,62 @@
+|FUNCTION:		MAIN			SELSOM
+|PARANS:		\		A	Y	R1
+|				N	N	1(R8)
+|--------------------------------------------------------------------
+|LOCALS:	RIJ	N	-2(R8)	SOM	Y	R6
+|				I	Y	R5
+|				START	N	-2(R8)
+|--------------------------------------------------------------------
+|RESULT:		\			Y	R0
+MAIN:	HIA.w	R0,-1
+	BST	R0
+	HIA	R8,R9	
+	BST	R0
+	AFT.w	R9,6	| 	LOCAL RIJ ON STACK
+|TESTLOOP:
+	HIA.w	R1,0
+MF1:	VGL.w	R1,6
+	VSP	GRG,naMF1
+	LEZ
+	HIA	R2,R8
+	AFT.w	R2,2
+	AFT	R2,R1
+	BIG	R0,0(R2)
+	OPT.w	R1,1
+	SPR	MF1
+naMF1:
+	
+|PARAMS:
+	HIA	R1,R8
+	AFT.w	R1,2
+	HIA.w	R0,4
+	BST	R0
+|FUNCTION:
+	BST	R8
+	HIA	R8,R9
+	SBR	SELSOM
+	HST	R8
+|CLEAR PARAMS:
+	OPT.w	R9,1
+|PROCESS RESULT:
+	DRU
+	STP
+SELSOM:	AFT.w	R9,1	|	LOCAL START ON STACK
+	HIA.w	R6,0
+	HIA	R0,1(R8)
+	DEL.w	R0,2
+	BIG	R0,-2(R8)
+	HIA	R5,-2(R8)
+FOR1:	VGL.w	R5,0
+	VSP	KLG,naFOR1
+	HIA	R0,R5
+	VER.w	R0,2
+	AFT.w	R0,1	|	R0 is 2*I - 1
+	OPT	R0,R1	|	R0 NOW HAS ADDRESS A[2*I - 1]
+	HIA	R0,0(R1)	|	RO NOW HAS VALUE A[2*I - 1]
+	OPT	R6,R0
+	AFT.w	R5,2
+	SPR	FOR1
+naFOR1:	HIA	R0,R6
+	OPT.w	R9,1	|	LOCAL START FROM STACK
+	KTG	
+	EINDPR
