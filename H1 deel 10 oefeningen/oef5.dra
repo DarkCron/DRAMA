@@ -1,0 +1,50 @@
+|FUNCTIONS:	MAIN		MAX
+|PARAMS:		/	N	N	2(R8)
+|			*M	N	1(R8)
+|------------------------------------------------------------
+|LOCALS:		/	I	N	-2(R8)
+|			GETAL	N	-3(R8)
+|------------------------------------------------------------
+|RESULT:		/		/
+MAIN:	HIA.w	R0,-1
+	BST	R0
+	HIA	R8,R9
+	BST	R0
+	
+	HIA.w	R1,0
+	LEZ		|	HOW MANY NUMBERS TO INPUT IS PARAM N FOR MAX
+|PARAMS:
+	BST	R0
+	HIA.a	R0,MAXG
+	BST	R0
+
+	BST	R8
+	HIA	R8,R9
+	SBR	MAX
+	HST	R8
+	
+|CLEAR PARAMS:
+	AFT.w	R9,2
+	HIA	R0,MAXG
+	DRU
+	STP
+MAX:	OPT.w	R9,2	|	LOCALS ON STACK
+	HIA.w	R0,0
+	BIG.i	R0,1(R8)
+	BIG	R0,-2(R8)
+FOR1:	HIA	R0,-2(R8)
+	VGL	R0,2(R8)
+	VSP	GRG,naFOR1
+	LEZ
+	BIG	R0,-3(R8)
+	VGL.i	R0,1(R8)
+	VSP	KLG,NAIF1
+	BIG.i	R0,1(R8)
+NAIF1:	HIA	R0,-2(R8)
+	OPT.w	R0,1
+	BIG	R0,-2(R8)
+	SPR	FOR1
+naFOR1:	AFT.w	R9,2	|	LOCALS FROM STACK
+	KTG
+MAXG:	RESGR	1
+	EINDPR

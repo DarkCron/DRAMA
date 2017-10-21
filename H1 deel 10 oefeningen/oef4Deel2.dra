@@ -1,0 +1,41 @@
+|FUNCTION:		MAIN		FAC
+|PARAMS:		/	N	N	1(R8)
+|-----------------------------------------------------------------------
+|LOCALS:		/	I	N	-2(R8)
+|			RESULT	N	-3(R8)
+|-----------------------------------------------------------------------
+|RESULT:		/		Y	R0
+MAIN:	HIA.w	R0,1
+	BST	R0
+	HIA	R8,R9
+	BST	R0
+	LEZ
+|PARAMS:
+	BST	R0
+
+	BST	R8
+	HIA	R8,R9
+	SBR	FAC
+	HST	R8
+|CLEAR PARAMS:
+	OPT.w	R9,1
+|PROCESS RESULT:
+	DRU
+	STP
+FAC:	OPT.w	R9,2	|	RESERVE LOCALS
+	HIA.w	R0,1
+	BIG	R0,-3(R8)
+	BIG	R0,-2(R8)
+FOR1:	HIA	R1,-2(R8)
+	VGL	R1,1(R8)
+	VSP	GR,naFOR1
+	HIA	R0,-3(R8)
+	VER	R0,-2(R8)
+	BIG	R0,-3(R8)
+	OPT.w	R1,1
+	BIG	R1,-2(R8)	
+	SPR	FOR1
+naFOR1:	HIA	R0,-3(R8)
+	AFT.w	R9,2	|	CLEAR LOCALS
+	KTG
+	EINDPR

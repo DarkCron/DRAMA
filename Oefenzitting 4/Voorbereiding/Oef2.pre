@@ -21,7 +21,10 @@ MF1:	VGL.w	R1,6
 	AFT.w	R2,2
 	AFT	R2,R1
 	BIG	R0,0(R2)
-	OPT.w	R1,1
+	HIA.a	R2,-2(R8)
+	AFT	R2,R1
+	BIG	R0,1(R2)
+	AFT.w	R1,1
 	SPR	MF1
 NAMF1:
 	
