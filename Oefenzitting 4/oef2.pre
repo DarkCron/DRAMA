@@ -1,0 +1,66 @@
+|FUNCTION:		MAIN			FIBON
+|PARAMS:		/		N	N	2(R8)
+|				R	N	1(R8)
+|-----------------------------------------------------------------------
+|LOCALS:	I	/	R6	I	Y	R6
+|	M	N	-2(R8)	
+|----------------------------------------------------------------------
+|RESULT:		/			Y	R0
+
+MAIN:	HIA.w	R0,1
+	BST	R0
+	HIA	R8,R9
+	BST	R0
+	LEZ
+	BIG	R0,-2(R8)
+	VGL.w	R0,100
+	VSP	GRG,naIF1
+|F	FIBON
+|PARAMS:
+	BST	R0	|PARAM	N
+	HIA.a	R0,F	
+	BST	R0	|PARAM	R
+|FUNC:
+	BST	R8
+	HIA	R8,R9
+	SBR	FIBON
+	HST	R8
+|CLEAR PARAMS:
+	AFT.w	R9,2
+|F	FIBON END:
+	HIA.w	R6,0
+FOR1:	VGL	R6,-2(R8)
+	VSP	GRG,naFOR1
+	HIA	R0,F(R6)
+	OPT.w	R6,1
+	DRU
+	SPR	FOR1
+NAFOR1:
+NAIF1:	STP
+FIBON:	HIA.w	R0,1
+	BIG.i	R0,1(R8)
+	HIA	R1,1(R8)
+	OPT.w	R1,1
+	BIG	R0,0(R1)
+	HIA.w	R6,2
+FOR2:	VGL	R6,2(R8)
+	VSP	GRG,naFOR2
+	HIA	R1,R6
+	AFT.w	R1,1	|R1 IS R-1
+	HIA	R0,1(R8)
+	OPT	R0,R1	
+	HIA	R2,0(R0)
+	HIA	R1,R6
+	AFT.w	R1,2	|R1 IS R-2
+	HIA	R0,1(R8)
+	OPT	R0,R1
+	OPT	R2,0(R0)	
+	HIA	R1,R6
+	HIA	R0,1(R8)
+	OPT	R0,R1
+	BIG	R2,0(R0)	
+	OPT.w	R6,1
+	SPR	FOR2
+NAFOR2:	KTG
+F:	RESGR	100
+	EINDPR
