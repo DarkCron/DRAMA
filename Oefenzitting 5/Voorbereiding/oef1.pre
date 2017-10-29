@@ -1,0 +1,52 @@
+|FUNCTION:		MAIN			
+|PARAMS:		/
+|LOCALS:	K	Y	R6
+|	WZ	N	-2(R8)
+|	J	N	-3(R8)
+|------------------------------------
+|STRUCTS:		hoofdstuk
+|LOCALS:	aantalblz		+0
+|	gestudeerd		+1
+
+MAIN:	HIA.w	R0,-1
+	BST	R0
+	HIA	R8,R9
+	BST	R0
+	
+|LOCALS:
+	AFT.w	R9,2	|*wz , j
+	
+	HIA	R0,R6
+	VER.w	R0,2	|2 items per struct
+	OPT.a	R0,cursus	|R0 wijst nu naar cursus[k]
+	HIA.w	R1,180
+	BIG	R1,0(R0)	|cursus[k].aantalblz = 180
+
+	HIA.w	R1,3
+	VER.w	R1,2	| 2 items per struct
+	OPT.a	R1,cursus	| R1 wijst naar cursus[3].aantalblz
+	OPT.w	R1,1	| R1 wijst naar cursus[3].gestudeerd
+	HIA	R0,-3(R8)	| R0 is j
+	AFT.w	R0,-2	| R0 is j-2
+	VER.w	R0,2	| 2 items per struct
+	OPT.a	R0,cursus	| R0 wijst naar adres cursus[j-2].aantalblz
+	OPT.w	R0,1	| R0 wijst naar adres curusu[j-2].gestudeerd
+	HIA	R0,0(R0)	| R0 heeft waarde cursus[j-2].gestudeerd
+	BIG	R0,0(R1)	| slaag R0 op in adres 0(R1) is cursus[3].gestudeerd
+
+	HIA.a	R0,cursus
+	BIG	R0,-2(R8)	| wz (op stapel) heeft adres cursus
+FOR:	HIA	R0,-2(R8)
+	VGL.a	R0,cursus + 10	| + 10 vanwege 5 x 2 items in struct
+	VSP	GR,naFor
+	HIA.w	R1,1
+	BIG	R1,0+1(R0)
+	OPT.w	R0,2	| 2 items in struct
+	BIG	R0,-2(R8)
+	SPR	FOR
+NAFOR:	
+|CLEAN:
+	OPT.w	R9,2
+	STP
+CURSUS:	RESGR	6*2
+	EINDPR

@@ -1,0 +1,74 @@
+|FUNCTION		MAIN			LEESRAT			DRUKRAT
+|PARAMS:		/		G	Y	R1	G	N	1(R8)
+|------------------------------------------------------------------------------------------------------------------
+|LOCALS:	Q	N	-4(R8)		/			/
+|-----------------------------------------------------------------------------------------------------------------
+|RESULT:		/			/			/
+|--------------------------------
+|-------------------------------
+|STRUCT:		rationaalgetal
+|	teller		+0
+|	noemer		+1
+|	gehdeel		+2
+MAIN:	HIA.w	R0,-1
+	BST	R0
+	HIA	R8,R9
+	BST	R0
+
+	AFT.w	R9,3	| LOCAL struct ratg. on stack
+|FUNC	LEESRAT:
+|PARAMS:
+	HIA.a	R1,-4(R8)
+|FUNC:
+	BST	R8
+	HIA	R8,R9
+	SBR	LEESRAT
+	HST	R8
+|CLEAR PARAMS: none
+|FUNC	LEESRAT END
+WHILE1:	HIA.w	R0,0
+	VGL	R0,-2(R8)
+	VSP	GEL,naWhile1
+|FUNC	DRUKRAT:
+|PARAMS:
+	HIA	R0,-4+0(R8)	|-4+0
+	BST	R0
+	HIA	R0,-4+1(R8)	|-4+1
+	BST	R0
+	HIA	R0,-4+2(R8)	|-4+2
+	BST	R0	| LOCAL struct on stack
+|FUNC:
+	BST	R8
+	HIA	R8,R9
+	SBR	DRUKRAT
+	HST	R8
+|CLEAR PARAMS:
+	OPT.w	R9,3	| Clear PARAMS (1 struct)
+|FUNC 	DRUKRAT END
+|FUNC	LEESRAT:
+|PARAMS:
+	HIA.a	R1,-4(R8)
+|FUNC:
+	BST	R8
+	HIA	R8,R9
+	SBR	LEESRAT
+	HST	R8
+|CLEAR PARAMS: none
+|FUNC	LEESRAT END
+	SPR	while1
+NAWHILE1:	STP	
+LEESRAT:	LEZ
+	BIG	R0,0(R1)
+	LEZ
+	BIG	R0,1(R1)
+	LEZ
+	BIG	R0,2(R1)
+	KTG
+DRUKRAT:	HIA	R0,1+2(R8)	|1+2
+	DRU
+	HIA	R0,1+0(R8)	|1+0
+	DRU
+	HIA	R0,1+1(R8)	|1+1
+	DRU
+	KTG
+	EINDPR
