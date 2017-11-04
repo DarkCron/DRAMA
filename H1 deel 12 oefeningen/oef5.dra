@@ -1,0 +1,177 @@
+|STRUCT:		Tco
+|	X		+0
+|	Y		+1
+|
+|FUNC:		cogr			leesco			scrijfco			leescorij	
+|PARAMS:	co1		3(R8)	*co	Y	R1	co		1(R8)	cr[]		2(R8)
+|	co2		1(R8)							n		1(R8)
+|
+|
+|LOCALS:		/								i		-2(R8)
+|
+|
+|
+|FUNC:		vindmaxco			main
+|PARAMS:	cr[]		3(R8)		/
+|	*maxco		2(R8)						
+|	n		1(R8)
+|
+|LOCALS:	i		-2(R8)	maxco		-2(R8)
+|	max		-3(R8)	len		-4(R8)
+|
+|	
+main:	AFT.w	R9,2
+	AFT.w	R9,1
+	LEZ	
+	BIG	R0,-4(R8)
+|FUNC:	PARAMS
+	HIA.a	R1,corij
+	BST	R1
+	HIA	R1,-4(R8)
+	BST	R1
+|FUNC:	BODY
+	BST	R8
+	HIA	R8,R9
+	SBR	leescorij
+	HST	R8
+|FUNC:	CLEAR PARAMS
+	OPT.w	R9,2
+|FUNC:	END	
+
+|FUNC:	PARANS
+	HIA.a	R1,corij
+	BST	R1
+	HIA.a	R1,-2(R8)
+	BST	R1
+	HIA	R1,-4(R8)
+	BST	R1
+|FUNC:	BODY
+	BST	R8
+	HIA	R8,R9
+	SBR	vindmaxco
+	HST	R8
+|FUNC:	CLEAR PARAMS
+	OPT.w	R9,3
+|FUNC:	END	
+			
+|FUNC:	PARANS
+	HIA.a	R1,-2(R8)
+	HIA	R2,0(R1)
+	BST	R2
+|FUNC:	BODY
+	BST	R8
+	HIA	R8,R9
+	SBR	schrijfco
+	HST	R8
+|FUNC:	CLEAR PARAMS
+	OPT.w	R9,1
+|FUNC:	END	
+	STP					
+cogr:	HIA	R1,3+0(R8)
+	VER	R1,R1
+	HIA	R2,3+1(R8)
+	VER	R2,R2
+	OPT	R1,R2	|R1 = LL
+	HIA	R2,1+0(R8)
+	VER	R2,R2
+	HIA	R0,1+1(R8)
+	VER	R0,R0
+	OPT	R2,R0	|R2 = RL
+	VGL	R1,R2
+	VSP	KLG,cogrElse
+	HIA.w	R0,1
+	KTG
+cogrElse:	HIA.w	R0,0
+	KTG
+leesco:	LEZ
+	BIG	R0,0(R1)
+	LEZ
+	BIG	R0,1(R1)
+	KTG
+schrijfco:	HIA	R1,1(R8)
+	HIA	R0,0(R1)
+	DRU
+	HIA	R0,1(R1)
+	DRU
+	KTG
+leescorij:	AFT.w	R9,1
+	HIA.w	R1,0
+	BIG	R1,-2(R8)
+lcorijFor:	HIA	R1,-2(R8)
+	VGL	R1,1(R8)
+	VSP	GRG,lcorijForNa
+	HIA.w	R2,R1	| i naar R2
+	VER.w	R2,2	| i*2 omdat in struct Tco 2 elementen
+	OPT	R2,2(R8)	| R2 heeft nu adres cr[i]
+|LOCALS:	SAVE
+	BST	R1
+	BST	R2
+|FUNC: PARAMS
+	HIA	R1,R2
+|FUNC: BODY
+	BST	R8
+	HIA	R8,R9
+	SBR	leesco
+	HST	R8
+|FUNC: CLEAR PARAMS
+
+|FUNC: END
+|LOCALS:	RESTORE
+	HST	R2
+	HST	R1
+	HIA	R1,-2(R8)
+	OPT.w	R1,1
+	BIG	R1,-2(R8)
+	SPR	lcorijFor
+lcorijForNa:
+	OPT.w	R9,1
+	KTG
+vindmaxco:	AFT.w	R9,2
+	HIA.w	R1,0
+	BIG	R1,-3(R8)
+	HIA.w	R1,1
+	BIG	R1,-2(R8)
+vmcFor:	HIA	R1,-2(R8)	| R1 is i
+	VGL	R1,1(R8)
+	VSP	GRG,vmcForNa	
+	
+|FUNC: PARAMS
+	HIA	R1,-2(R8)
+	VER.w	R1,2
+	OPT	R1,3(R8)
+	HIA	R2,0(R1)
+	BST	R2	|cr[i].x op stack
+	HIA	R2,1(R1)
+	BST	R2	|cr[i].y op stack, cr[i] nu volledig op stack
+	HIA	R1,-3(R8)
+	VER.w	R1,2
+	OPT	R1,3(R8)
+	HIA	R2,0(R1)
+	BST	R2	|cr[max].x op stack
+	HIA	R2,1(R1)
+	BST	R2	|cr[max].y op stack, cr[i] nu volledig op stack
+|FUNC: BODY
+	BST	R8
+	HIA	R8,R9
+	SBR	cogr
+	HST	R8
+|FUNC: CLEAR PARAMS
+	OPT.w	R9,4
+|FUNC:END
+	VGL.w	R0,1
+	VSP	NGEL,vmcNaIf	
+	HIA	R1,-2(R8)
+	BIG	R1,-3(R8)
+vmcNaIf:	HIA	R1,-2(R8)
+	OPT.w	R1,1
+	BIG	R1,-2(R8)
+	SPR	vmcFor
+vmcForNa:	HIA	R1,-3(R8)
+	VER.w	R1,2
+	OPT	R1,3(R8)	|R1 adres cr[max]
+	HIA	R2,2(R8)
+	BIG	R1,0(R2)
+	OPT.w	R9,2
+	KTG
+corij:	RESGR	2*100
+	EINDPR
