@@ -3,8 +3,8 @@
 |	Y		+1
 |
 |FUNC:		cogr			leesco			scrijfco			leescorij	
-|PARAMS:	co1		3(R8)	*co	Y	R1	co		1(R8)	cr[]		2(R8)
-|	co2		1(R8)							n		1(R8)
+|PARAMS:	co1		3(R8)	*co	Y	R1	co.x		2(R8)	cr[]		2(R8)
+|	co2		1(R8)				co.y		1(R8)	n		1(R8)
 |
 |
 |LOCALS:		/								i		-2(R8)
@@ -16,7 +16,7 @@
 |	*maxco		2(R8)						
 |	n		1(R8)
 |
-|LOCALS:	i		-2(R8)	maxco		-2(R8)
+|LOCALS:	i		-2(R8)	maxco		-3(R8)
 |	max		-3(R8)	len		-4(R8)
 |
 |	
@@ -41,7 +41,7 @@ main:	AFT.w	R9,2
 |FUNC:	PARANS
 	HIA.a	R1,corij
 	BST	R1
-	HIA.a	R1,-2(R8)
+	HIA.a	R1,-3(R8)
 	BST	R1
 	HIA	R1,-4(R8)
 	BST	R1
@@ -55,8 +55,10 @@ main:	AFT.w	R9,2
 |FUNC:	END	
 			
 |FUNC:	PARANS
-	HIA.a	R1,-2(R8)
+	HIA	R1,-3(R8)
 	HIA	R2,0(R1)
+	BST	R2
+	HIA	R2,1(R1)
 	BST	R2
 |FUNC:	BODY
 	BST	R8
@@ -64,7 +66,7 @@ main:	AFT.w	R9,2
 	SBR	schrijfco
 	HST	R8
 |FUNC:	CLEAR PARAMS
-	OPT.w	R9,1
+	OPT.w	R9,2
 |FUNC:	END	
 	STP					
 cogr:	HIA	R1,3+0(R8)
@@ -88,10 +90,9 @@ leesco:	LEZ
 	LEZ
 	BIG	R0,1(R1)
 	KTG
-schrijfco:	HIA	R1,1(R8)
-	HIA	R0,0(R1)
+schrijfco:	HIA	R0,2(R8)
 	DRU
-	HIA	R0,1(R1)
+	HIA	R0,1(R8)
 	DRU
 	KTG
 leescorij:	AFT.w	R9,1
