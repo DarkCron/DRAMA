@@ -1,0 +1,141 @@
+|STRUCT:		rec	6
+|	len		+0
+|	rij[5]		+1
+|
+|FUNC:		mkRec				rec2rij				main
+|PARAMS:	*r		2(R8)		s	struct	7(R8)		
+|	n		1(R8)		r[]	REG	R1		
+|									
+|LOCALS:	tmp	rec	-7(R8)		i	REG	R6		i	REG	R6
+|	i	REG	R6		*ptr	REG	R5		REC	rec	-12(R8)
+|									rij[]		-7(R8)
+|RETURNS:	struct	rec	3(R8)			/
+|		
+main:	HIA.w	R0,-1
+	BST	R0
+	HIA	R8,R9
+	BST	R0
+	
+	AFT.w	R9,11
+
+	HIA.w	R0,1
+	BIG	R0,-6(R8)
+
+	HIA.w	R0,2
+	BIG	R0,-6+1(R8)	|-6-1
+
+	HIA.w	R0,3
+	BIG	R0,-6+2(R8)
+
+	HIA.w	R0,4
+	BIG	R0,-6+3(R8)
+
+	HIA.w	R0,5
+	BIG	R0,-6+4(R8)
+
+|FUNC	mkRec	START
+|FUNC	PARAMS:
+	AFT.w	R9,6	|RESULT
+	HIA.a	R1,-6(R8)
+	BST	R1
+	HIA.w	R1,3
+	BST	R1
+|FUNC 	BODY
+	BST	R8
+	HIA	R8,R9
+	SBR	mkRec
+	HST	R8
+|FUNC	PARAMS CLEAN
+	OPT.w	R9,2
+|FUNC	RESULT
+	HST	R1
+	BIG	R1,-12+0(R8)
+	HST	R1
+	BIG	R1,-12+1(R8)
+	HST	R1
+	BIG	R1,-12+2(R8)
+	HST	R1
+	BIG	R1,-12+3(R8)
+	HST	R1
+	BIG	R1,-12+4(R8)
+	HST	R1
+	BIG	R1,-12+5(R8)
+|FUNC	mkRec	END
+|FUNC	rec2rij	START
+|FUNC	PARAMS
+	HIA.a	R1,grij
+	HIA	R0,-12(R8)
+	BST	R0
+	HIA	R0,-12+1(R8)
+	BST	R0
+	HIA	R0,-12+2(R8)
+	BST	R0
+	HIA	R0,-12+3(R8)
+	BST	R0
+	HIA	R0,-12+4(R8)
+	BST	R0
+	HIA	R0,-12+5(R8)
+	BST	R0
+|FUNC	BODY
+	BST	R8
+	HIA	R8,R9
+	SBR 	rec2rij
+	HST	R8
+|FUNC	PARAMS	CLEAR
+	OPT.w	R9,6
+|FUNC	rec2rij	END	
+	OPT.w	R9,11
+	HIA.w	R6,0
+mainFor:	VGL.w	R6,5
+	VSP	GRG,mainForNa
+	HIA	R0,R6
+	OPT.a	R0,grij
+	HIA	R0,0(R0)
+	DRU
+	OPT.w	R6,1
+	SPR	mainFor
+mainForNa:
+	STP
+mkRec:	AFT.w	R9,6
+	HIA	R2,1(R8)
+	BIG	R2,-7(R8)
+	HIA.w	R6,0
+mkRecFor:	VGL	R6,1(R8)	
+	VSP	GRG,mkRecForNa
+	HIA	R2,R6
+	OPT	R2,2(R8)
+	HIA	R2,0(R2)	|R2 is r[i]
+	HIA	R0,R6
+	OPT.a	R0,-7+1(R8)|R1 is tmp.rij[i]
+	BIG	R2,0(R0)	
+	OPT.w	R6,1
+	SPR	mkRecFor
+mkRecForNa:HIA	R1,-7(R8)
+	BIG	R1,3(R8)
+	HIA	R1,-7+1(R8)
+	BIG	R1,3+1(R8)
+	HIA	R1,-7+2(R8)
+	BIG	R1,3+2(R8)
+	HIA	R1,-7+3(R8)
+	BIG	R1,3+3(R8)
+	HIA	R1,-7+4(R8)
+	BIG	R1,3+4(R8)
+	HIA	R1,-7+5(R8)
+	BIG	R1,3+5(R8)
+|	HIA	R1,-8+6(R8)
+|	BIG	R1,3+6(R8)
+	OPT.w	R9,6
+	KTG
+rec2rij:	HIA.a	R5,7+1(R8)
+	HIA.w	R6,0
+r2rFor:	VGL	R6,7(R8)
+	VSP	GRG,r2rForNa
+	HIA	R2,R1
+	OPT	R2,R6
+	HIA	R0,0(R5+)
+	BIG	R0,0(R2)
+	OPT.w	R6,1
+	SPR	r2rFor
+r2rForNa:	KTG
+grij:	0;0;0;0;0
+	EINDPR

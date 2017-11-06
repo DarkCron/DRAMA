@@ -1,0 +1,38 @@
+|STRUCT:		Tco; lengte 2
+|	x		+0
+|	y		+1
+|-----------------------------
+|FUNC:		cogr				leesco			drukco			vindMaxCo			main
+|PARAMS:	co1	struct Tco		1(R8)	co	N	1(R8)	co	struct	1(R8)	Tco	N	2(R8)		/
+|	co2wz	Y		R1							n	N	1(R8)
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|LOCALS:		/				/			/		i	Y	R6	Tco	struct	-2(R8)
+|											max	Y	R5	i	Y	R6
+|														aantal	N	-3(R8)
+|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|RESULT:		Y				N			N			Y			N
+|---------------------------------------
+main:	HIA.w	R0,-1
+	BST	R0
+	HIA	R8,R9
+	BST	R0
+
+	AFT.w	R9,2	| Locals on stack
+	LEZ
+	BIG	R0,-3(R8)
+	HIA.w	R6,0
+mainfor:	VGL	R6,-3(R8)
+	VSP	GRG,namainfor
+|FUNC LEESCO
+|PARAMS:
+	HIA	R0,R6
+	VER.w	R0,2
+	OPT.a	R0,corij
+		
+	
+	OPT.w	R6,1
+	SPR	mainfor
+namainfor:
+	STP
+corij:	RESGR	50*2
+	EINDPR
