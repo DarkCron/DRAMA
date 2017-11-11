@@ -1,0 +1,18 @@
+ HIA.a R2,0
+ HIA.a R1,CRIT
+ LUS: LEZ
+ VGL.i R0,0(R1+)
+ VSP GRG,END
+ OPT R2,R0
+ SPR LUS
+ END: HIA R0,R2
+ DRU
+ STP
+ CRIT: 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20

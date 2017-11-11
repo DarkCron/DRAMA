@@ -1,0 +1,127 @@
+|STRUCT		elem	len 3
+|	id		+0
+|	type		+1
+|	aantal		+2
+
+|FUNC:		dupliceer				drukElem				main
+|PARAMS:	*obj	N	1(R8)		*obj	N	1(R8)			/
+|	soort	Y	R1		
+|
+|LOCALS:	tmp	struct	-4(R8)						ingr	struct	-4(R8)
+|									i	REG	R6
+|									
+|
+|RESULT:	YES	struct	2(R8)(->4(R8))
+|
+	SPR	main
+DUPLICEER:	AFT.w	R9,3		|tmp op stack
+	HIA	R2,1(R8)
+	|tmp=*obj
+	HIA	R0,0+0(R2)		|R0 is obj->id
+	BIG	R0,-4+0(R8)	|tmp.id is R0 is obj->id
+	HIA	R0,0+1(R2)		|R0 is obj->type
+	BIG	R0,-4+1(R8)	|tmp.type is R0 is obj->type
+	HIA	R0,0+2(R2)		|R0 is obj->aantal
+	BIG	R0,-4+2(R8)	|tmp.aantal is R0 is obj->aantal
+	|tmp.type = soort
+	BIG	R1,-4+1(R8)
+	|return (tmp)
+	HIA	R0,-4+0(R8)
+	BIG	R0,2+0(R8)	
+	HIA	R0,-4+1(R8)
+	BIG	R0,2+1(R8)
+	HIA	R0,-4+2(R8)
+	BIG	R0,2+2(R8)
+	|Clean locals
+	OPT.w	R9,3
+	KTG
+DRUKELEM:	HIA	R1,1(R8)
+	HIA	R0,0+0(R1)		|R0 is obj->id
+	DRU
+	HIA	R0,0+1(R1)		|R0 is obj->type
+	DRU
+	HIA	R0,0+2(R1)		|R0 is obj->aantal
+	DRU
+	KTG
+MAIN:	HIA.w	R0,-1
+	BST	R0
+	HIA	R8,R9
+	BST	R0
+
+	AFT.w	R9,3	|local struct ingr on stack
+	HIA.w	R6,0	|R6 is i = 0
+FOR1:	VGL.w	R6,10
+	VSP	GRG,nafor1
+	|ingr.id = i
+	BIG	R6,-4+0(R8)
+	|ingr.type = 10*i
+	HIA	R1,R6
+	VER.w	R1,10
+	BIG	R1,-4+1(R8)
+	|ingr.aantal = 1
+	HIA.w	R1,1
+	BIG	R1,-4+2(R8)
+	|rij[i] = ingr
+	HIA	R1,R6
+	VER.w	R1,3	|R1 is index i voor rij[i]
+	OPT.a	R1,rij	|R1 is &rij[i]
+	HIA	R0,-4+0(R8)	|R0 is ingr.id
+	BIG	R0,0+0(R1)	
+	HIA	R0,-4+1(R8)	|R0 is ingr.type
+	BIG	R0,0+1(R1)	
+	HIA	R0,-4+2(R8)	|R0 is ingr.aantal
+	BIG	R0,0+2(R1)	
+	|rij [i+1] = dupliceer(&ingr,20*i)
+|FUNC	dupliceer
+|RESULT RESERVE:
+	AFT.w	R9,3	|struct elem result
+|PARAMS:
+	HIA	R1,R6
+	VER.w	R1,20	|soort = 20*i
+	HIA.a	R0,-4(R8)
+	BST	R0	|*obj PARAM
+|FUNC:
+	BST	R8
+	HIA	R8,R9
+	SBR	dupliceer
+	HST	R8
+|PARAMS CLEAR:
+	OPT.w	R9,1	|*obj PARAM from stack
+|RESULT:
+	HIA	R1,R6
+	OPT.w	R1,1
+	VER.w	R1,3
+	OPT.a	R1,rij	|R1 is &rij[i+1]
+	HST	R0	|R0 is result.id
+	BIG	R0,0+0(R1)	
+	HST	R0	|R0 is result.soort
+	BIG	R0,0+1(R1)	
+	HST	R0	|R0 is result.aantal
+	BIG	R0,0+2(R1)	
+|FUNC	dupliceer	END
+	OPT.w	R6,2
+	SPR	for1
+NAFOR1:	HIA.w	R6,0
+FOR2:	VGL.w	R6,10
+	VSP	GRG,nafor2
+	|drukElem(&rij[i])
+|FUNC	drukElem
+|PARAMS:
+	HIA	R1,R6
+	VER.w	R1,3
+	OPT.a	R1,rij
+	BST	R1	|PARAM *obj
+|FUNC:	
+	BST	R8
+	HIA	R8,R9
+	SBR	drukElem
+	HST	R8
+|CLEAR PARAMS:
+	OPT.w	R9,1
+|FUNC	drukElem	END
+	OPT.w	R6,1
+	SPR	for2
+NAFOR2:	OPT.w	R9,3	|clear locals
+	STP
+RIJ:	RESGR	10*3
+	EINDPR
