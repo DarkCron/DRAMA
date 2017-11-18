@@ -1,0 +1,93 @@
+|STRUCT	elem	len 2
+|	info	+0
+|	*elem	+1
+|
+|FUNC:		inlassen			druklijst			main
+|
+|PARAMS:	*l	N	+2(R8)	*l	Reg	R1	
+|	g	N	+1(R8)	
+|
+|LOCALS:	*p	Reg	R6				*lst	Reg	R6
+|	*pp	Reg	R5				getal	N	-2(R8)
+|	*n	N	-2(R8)
+
+main:	HIA.w	R0,-1
+	BST	R0
+	HIA	R8,R9
+	BST	R0
+	HIA.a	R7,HEAP
+	
+	OPT.w	R7,2
+	HIA.a	R6,-2(R7)
+	HIA.w	R0,0
+	BIG	R0,0+0(R6)
+	HIA.w	R0,0
+	BIG	R0,0+1(R6)
+	LEZ
+	BIG	R0,-2(R8)
+preWhile3:	HIA	R0,-2(R8)
+	VGL.w	R0,0
+	VSP	KLG,naWhile3
+|FUNC	inlassen
+|params:
+	BST	R6
+	BST	R0
+|func:
+	BST	R8
+	HIA	R8,R9
+	SBR	inlassen
+	HST	R8
+|params restore:
+	HST	R0
+	HST	R6
+|FUNC	inlassen END
+	LEZ
+	BIG	R0,-2(R8)
+	SPR	preWhile3
+naWhile3:	
+|FUNC	druklijst
+|Params:
+	HIA	R1,R6	|param *lst
+|func:
+	BST	R8
+	HIA	R8,R9
+	SBR	druklijst
+	HST	R8
+|clear params
+|FUNC 	druklijst	END
+	STP	
+inlassen:	BST	R6	|R6 i p
+	BST	R5	|R5 is pp
+	HIA	R5,2(R8)
+	HIA	R6,0+1(R5)
+preWhile1:	VGL.w	R6,0
+	VSP	NUL,naWhile1
+	HIA	R0,0(R6)
+	HIA	R1,1(R8)
+	VGL	R0,R1
+	VSP	GRG,naWhile1
+	|in de while loop
+	HIA	R5,R6
+	HIA	R6,0+1(R5)
+	SPR	preWhile1
+	|uit de while loop
+naWhile1:	OPT.w	R7,2
+	HIA.a	R2,-2(R7)	| R2 is -2(R7) = n
+	HIA	R1,1(R8)	|g
+	BIG	R1,0+0(R2)	|n->info
+	BIG	R6,0+1(R2)|n->*volg
+	BIG	R2,0+1(R5)
+	HST	R5
+	HST	R6
+	KTG
+druklijst:	HIA	R1,0+1(R1)
+preWhile2:	VGL.w	R1,0
+	VSP	GEL,naWhile2
+	HIA	R0,0+0(R1)
+	DRU
+	HIA	R1,0+1(R1)
+	SPR	preWhile2
+naWhile2:	STP
+	KTG
+HEAP:	RESGR	200
+	EINDPR

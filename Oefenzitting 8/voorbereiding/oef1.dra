@@ -1,0 +1,37 @@
+|HEAP:	*iw	
+|	
+
+main:	HIA.w	R0,-1
+	BST	R0
+	HIA	R8,R9
+	BST	R0
+	HIA.a	R7,HEAP
+	
+	|iw = alloc(1)
+	OPT.w	R7,1
+	HIA.a	R1,-1(R7)
+	|printint(iw,*iw)	
+	HIA.a	R0,-1(R7)
+	DRU
+	HIA	R0,0(R1)	
+	DRU
+	|*iw=10
+	HIA.w	R0,10
+	BIG	R0,0(R1)
+	|printint(iw,*iw)	
+	HIA.a	R0,-1(R7)
+	DRU
+	HIA	R0,0(R1)	
+	DRU
+	|iw = (int *)10
+	HIA.a	R0,10
+	BIG	R0,0(R1)
+	|printint(iw,*iw)	
+	HIA.a	R0,-1(R7)
+	DRU
+	HIA	R0,0(R1)	
+	DRU
+	STP
+iw:	RESGR	1
+HEAP:	RESGR	200
+	EINDPR
