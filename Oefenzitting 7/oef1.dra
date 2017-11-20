@@ -1,0 +1,87 @@
+|Struct	elem	2
+|	type	+0
+|	aantal	+1
+
+|Func:		isType			increment
+|Params:	soort	REG	R1	rij[]		1(R8)
+|	*obj		1(R8)	soort	struct	R1
+|				start		R2
+	
+|Locals:	/			tmp	elem	-3(R8)
+|
+|Result:			R0	
+
+isType:	HIA	R2,1(R8)
+	HIA	R2,0(R2)
+	VGL	R2,R1
+	VSP	NGEL,If1Else
+	HIA	R0,1
+	KTG
+If1Else:	HIA	R0,0
+	KTG
+increment:	AFT.w	R9,2
+	BST	R6
+	|tmp = rij[start]
+	HIA	R6,R2
+	VER.w	R6,2
+	OPT.a	R6,-3(R8)
+	HIA	R0,0+0(R6)
+	BIG	R0,-3+0(R8)
+	HIA	R0,0+1(R6)
+	BIG	R0,-3+1(R8)
+	|isType(*soort,&tmp)
+|Func	isType	
+|REGISTERS:
+	BST	R2
+	BST	R1
+|Params:
+	|PARAM soort is OK
+	HIA.a	R0,-3(R8)
+	BST	R0	|PARAM *obj
+|FUNC:
+	BST	R8
+	HIA	R8,R9
+	SBR	isType
+	HST	R8
+|PARAMS CLEAN:
+	OPT.w	R9,1
+|RESTORE REGISTERS:
+	HST	R1
+	HST	R2
+|FUNC	isType	END
+	VGL	R0,1
+	VSP	NGEL,If2Else
+	|rij[start] zit nog in R6
+	HIA	R0,0+1(R6)
+	OPT.w	R0,1
+	BIG	R0,0+1(R6)
+	|increment(rij,soort,start+1)
+|FUNC	increment
+|LOCAL REGS:
+	BST	R2
+	BST	R1
+|PARAMS:
+	HIA.a	R0,1(R8)
+	BST	R0	|PARAM rij[], PARAM soort is OK
+	HIA	R0,R2
+	OPT.w	R0,1
+	HIA	R2,R0	|PARAM start
+|FUNC:
+	BST	R8
+	HIA	R8,R9
+	SBR	increment
+	HST	R8
+|CLEAR PARAMS:
+	OPT.w	R9,1
+|RESTORE REGS:
+	HST	R1
+	HST	R2
+|FUNC	increment	END
+	HIA	R0,R2
+	DRU
+If2Else:	HST	R6
+	OPT.w	R9,2
+	KTG
+
+stock:	RESGR	2*10	
+	EINDPR
