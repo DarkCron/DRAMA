@@ -1,0 +1,75 @@
+|FUNC:		bereken			main
+|
+|PARAMS:	*ptr	N	1(R8)	
+|	n	Y	R1
+|
+|LOCALS:	tmp[3]	N	-4(R8)	i	N	-2(R8)
+|	k	Y	R6	j	Reg	R6
+
+main:	HIA.w	R0,1
+	BST	R0
+	HIA	R8,R9
+	BST	R0
+	
+	AFT.w	R9,1	|i op stack -2(R8)
+	HIA.w	R6,1
+|FUNC	bereken
+|Params
+	HIA	R1,R6
+	AFT.w	R1,1
+	HIA.a	R2,data
+	OPT	R2,R1	|R2 is &data[j-1]
+	BST	R2	|Parama	*ptr
+	HIA	R1,R6	|Param	n
+|FUNC
+	BST	R8
+	HIA	R8,R9
+	SBR	bereken
+	HST	R8
+|Clear	Params
+	OPT.w	R9,1
+|FUNC	bereken	END	
+	BIG	R0,-2(R8)	|i is result bereken
+	HIA	R2,R6
+	HIA	R1,-2(R8)	|R1 is i
+	AFT	R2,R1	|R2 is j-1
+	OPT.w	R2,2	|R2 is j-1+2
+	OPT.a	R2,data
+	HIA	R0,0(R2)
+	DRU
+	STP
+bereken:	BST	R6
+	AFT.w	R9,3
+	VGL.w	R1,3
+	VSP	KL,IfElse1
+	HIA.w	R0,0
+	SPR	berekenEnd
+IfElse1:	HIA	R2,R6	|R2 is index tmp is k
+	AFT.w	R2,1	|R2 is k-1
+	HIA.a	R0,-4(R8)	|R0 is &tmp
+	OPT	R0,R2	|R0 is &tmp[k-1]
+|FUNC	bereken
+|Registers on stack:
+	BST	R1
+|PARAMS:
+	BST	R0	|param *ptr
+	HIA	R1,R1
+	OPT.w	R1,1	|param n
+|FUNC:
+	BST	R8
+	HIA	R8,R9
+	SBR	bereken
+	HST	R8
+|PARAMS	CLEAR
+	OPT.w	R9,1
+|Restore registers:
+	HST	R1	
+|FUNC	bereken	END
+	HIA	R2,1(R8)
+	OPT	R0,0(R2)
+	AFT	R0,R1	
+berekenEnd:	OPT.w	R9,3	|clear tmp	
+	HST	R6
+	KTG	
+data:	1;2;3;4;5
+	EINDPR
